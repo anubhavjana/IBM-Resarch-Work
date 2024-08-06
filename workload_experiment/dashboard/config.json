@@ -1,0 +1,92 @@
+{
+    "title": "Anubhav's IRL Dashboard",
+    "tabs": [
+      {
+        "label": "Priority Based Multi-Instance Routing",
+        "users": [
+          {"name": "Alan", "color": "blue"},
+          {"name": "Noel", "color": "green"},
+          {"name": "Hari", "color": "purple"}
+        ],
+        "buttons": [
+          {
+            "label": "Run Multi-Instance TGIS (Llama-1 Llama-2 Llama-3 A100 80 GB) 10.15.21",
+            "id": "tgis-multi-instance-10-15-20",
+            "style": {"width": "30%", "height": "60px", "backgroundColor": "rgba(255, 0, 0, 0.1)"}
+          },
+          {
+            "label": "Run TGIS Multi-Instance (LLama Mig3g.40g + Bloom Mig3g.40g) 4.4.4",
+            "id": "run-tgis-llama-bloom",
+            "style": {"width": "30%", "height": "60px", "backgroundColor": "rgba(0, 255, 0, 0.1)"}
+          },
+          {
+            "label": "Run TGIS Multi-Instance (Llama MiG3g - All users to same pod) 4.4.4",
+            "id": "run-tgis-llama",
+            "style": {"width": "30%", "height": "60px", "backgroundColor": "rgba(0, 0, 255, 0.1)"}
+          },
+          {
+            "label": "Run TGIS Multi-Instance (Llama A100 - All users to same pod) 4.4.4",
+            "id": "run-tgis-llama-a100-4-4-4",
+            "style": {"width": "30%", "height": "60px", "backgroundColor": "rgba(0, 255, 0, 0.1)"}
+          }
+        ],
+        "outputs": ["multi-instance-output", "llama-bloom-output", "tgis-all-pod-output", "tgis-llama-a100-4-4-4-output"]
+      },
+      {
+        "label": "Priority vs Non-Priority in TGIS Experiments",
+        "users": [
+          {"name": "Alan", "color": "blue"},
+          {"name": "Noel", "color": "green"},
+          {"name": "Hari", "color": "purple"}
+        ],
+        "buttons": [
+          {
+            "label": "Priority in Llama A100 TGIS (6:6:6)",
+            "id": "priority-tgis-6-6-6",
+            "style": {"width": "30%", "height": "60px", "backgroundColor": "rgba(255, 0, 0, 0.1)"}
+          },
+          {
+            "label": "No Priority in Llama A100 TGIS (6:6:6)",
+            "id": "no-priority-tgis-6-6-6",
+            "style": {"width": "30%", "height": "60px", "backgroundColor": "rgba(0, 255, 0, 0.1)"}
+          }
+        ],
+        "outputs": ["priority-tgis-6-6-6-output", "no-priority-tgis-6-6-6-output"]
+      },
+      {
+        "label": "Benchmark",
+        "dropdowns": [
+          {
+            "label": "Select Inference Server",
+            "id": "inference-server-dropdown",
+            "options": [
+              {"label": "VLLM", "value": "vllm"},
+              {"label": "TGIS", "value": "tgis"}
+            ],
+            "default": "tgis"
+          },
+          {
+            "label": "Select Model",
+            "id": "model-dropdown",
+            "options": [
+              {"label": "Llama3-8B", "value": "llama3-8b"},
+              {"label": "Granite-3B", "value": "granite-3b"},
+              {"label": "Bloom-760", "value": "bloom-760"}
+            ],
+            "default": "llama3-8b"
+          },
+          {
+            "label": "Select GPU Type",
+            "id": "gpu-dropdown",
+            "options": [
+              {"label": "A100 80 GB", "value": "a100-80gb"},
+              {"label": "MIG 3g.40gb", "value": "mig-3g-40gb"}
+            ],
+            "default": "a100-80gb"
+          }
+        ],
+        "outputs": ["selection-output", "image-output"]
+      }
+    
+    ]
+  }

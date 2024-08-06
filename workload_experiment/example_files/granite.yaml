@@ -1,0 +1,94 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: granite
+  namespace: fmaas-monitoring
+  labels:
+    name: granite
+    workload: tgis-model-test
+spec:
+  imagePullSecrets:
+    - name: all-icr-io
+  containers:
+    - resources:
+        limits:
+          cpu: '2'
+          memory: 50Gi
+          nvidia.com/mig-2g.20gb: 1
+        requests:
+          cpu: '2'
+          memory: 50Gi
+          nvidia.com/mig-2g.20gb: 1
+      name: base
+      command:
+        - sh
+        - '-c'
+        - |
+          TRANSFORMERS_CACHE=/data text-generation-launcher --max-concurrent-requests 10000 --max-batch-size 1000 --model-name /data/granite-3b-base-v2
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: dshm
+          mountPath: /dev/shm
+        - name: data
+          mountPath: /data
+      image: 'docker.io/felixgeorge/tgis:v2'
+  volumes:
+    - name: dshm
+      emptyDir:
+        medium: Memory
+    - name: data
+      persistentVolumeClaim:
+        claimName: ibm-inter-ckpts-pvc
+
+# --model-name /data/granite-ext-language-models/granite-20b-codeplus-ml5-merge-0113
+# granite-13b-5lang-base-v1      granite-20b-code-base-v2      granite-3b-code-base-v1       granite-8b-instruct-v2
+# granite-13b-5lang-instruct-v1  granite-20b-code-cobol-v1     granite-3b-code-cobol-v1      granite-architecture-testing
+# granite-13b-base-v1            granite-20b-code-instruct-v1  granite-3b-code-plus-v1       granite-ext-language-models
+# granite-13b-base-v2            granite-20b-code-java-v1      granite-3b-finance-base-v1    obsidian-16b-base-v1
+# granite-13b-instruct-v1        granite-20b-code-plus-v1      granite-3lang-sft-models      obsidian-16b-instruct-v1
+# granite-13b-instruct-v2        granite-34b-code-base-v1      granite-8b-2lang-base-v1      sandstone-3b-base-v2
+# granite-1b-code-base-v1        granite-3b-base-v2            granite-8b-2lang-instruct-v1  sandstone-3b-instruct-v2
+# granite-20b-code-base-v1       granite-3b-code-ansible-v1    granite-8b-base-v2            sandstone-3b-lm-v2
+
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: granite-mig3g
+  namespace: fmaas-monitoring
+  labels:
+    name: granite-mig3g
+    workload: tgis-model-test
+spec:
+  imagePullSecrets:
+    - name: all-icr-io
+  containers:
+    - resources:
+        limits:
+          cpu: '2'
+          memory: 50Gi
+          nvidia.com/mig-3g.40gb: 1
+        requests:
+          cpu: '2'
+          memory: 50Gi
+          nvidia.com/mig-3g.40gb: 1
+      name: base
+      command:
+        - sh
+        - '-c'
+        - |
+          TRANSFORMERS_CACHE=/data text-generation-launcher --max-concurrent-requests 10000 --max-batch-size 5000 --model-name /data/granite-3b-code-ansible-v1/granite-3b-pt-code-plus-inc-yaml-20230815-084902
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: dshm
+          mountPath: /dev/shm
+        - name: data
+          mountPath: /data
+      image: 'docker.io/felixgeorge/tgis:v2'
+  volumes:
+    - name: dshm
+      emptyDir:
+        medium: Memory
+    - name: data
+      persistentVolumeClaim:
+        claimName: ibm-inter-ckpts-pvc

@@ -1,0 +1,44 @@
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: llama-2.3
+  namespace: fmaas-monitoring
+  labels:
+    name: llama-2.3
+    workload: tgis-model-test
+spec:
+  restartPolicy: Never
+  imagePullSecrets:
+    - name: all-icr-io
+  containers:
+    - resources:
+        limits:
+          cpu: '2'
+          memory: 50Gi
+          nvidia.com/gpu: 1
+        requests:
+          cpu: '2'
+          memory: 50Gi
+          nvidia.com/gpu: 1
+      name: base
+      command:
+        - sh
+        - '-c'
+        - |
+          TRANSFORMERS_CACHE=/data text-generation-launcher --max-waiting-tokens 1 --max-concurrent-requests 10000 --max-batch-size 1000 --model-name /data/hf/8b_instruction_tuned
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: dshm
+          mountPath: /dev/shm
+        - name: data
+          mountPath: /data
+      image: 'docker.io/felixgeorge/text-generation-server:v4'
+  volumes:
+    - name: dshm
+      emptyDir:
+        medium: Memory
+    - name: data
+      persistentVolumeClaim:
+        claimName: llama-3-pvc
+        

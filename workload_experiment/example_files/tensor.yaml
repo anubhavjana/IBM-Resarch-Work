@@ -1,0 +1,114 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: tensor-2g
+  namespace: fmaas-monitoring
+  labels:
+    name: tensor-2g
+spec:
+  restartPolicy: Never
+  imagePullSecrets:
+    - name: all-icr-io
+  containers:
+    - name: base
+      image: docker.io/kaurayibm/gputensor
+      resources:
+        limits:
+          cpu: '1'
+          memory: 5Gi
+          nvidia.com/mig-2g.20gb: 1
+        requests:
+          cpu: '1'
+          memory: 5Gi
+          nvidia.com/mig-2g.20gb: 1
+      volumeMounts:
+        - name: dshm
+          mountPath: /dev/shm
+        - name: data
+          mountPath: /data
+      imagePullPolicy: IfNotPresent
+  serviceAccount: default
+  volumes:
+    - name: dshm
+      emptyDir:
+        medium: Memory
+    - name: data
+      persistentVolumeClaim:
+        claimName: fmaas-monitoring-cos
+_________________________________________________
+kind: Pod
+apiVersion: v1
+metadata:
+  name: tensor-3g
+  namespace: fmaas-monitoring
+  labels:
+    name: tensor-3g
+spec:
+  restartPolicy: Never
+  imagePullSecrets:
+    - name: all-icr-io
+  containers:
+    - name: base
+      image: docker.io/kaurayibm/gputensor
+      resources:
+        limits:
+          cpu: '1'
+          memory: 5Gi
+          nvidia.com/mig-3g.40gb: 1
+        requests:
+          cpu: '1'
+          memory: 5Gi
+          nvidia.com/mig-3g.40gb: 1
+      volumeMounts:
+        - name: dshm
+          mountPath: /dev/shm
+        - name: data
+          mountPath: /data
+      imagePullPolicy: IfNotPresent
+  serviceAccount: default
+  volumes:
+    - name: dshm
+      emptyDir:
+        medium: Memory
+    - name: data
+      persistentVolumeClaim:
+        claimName: fmaas-monitoring-cos
+
+__________________________________________________
+kind: Pod
+apiVersion: v1
+metadata:
+  name: tensor-1g
+  namespace: fmaas-monitoring
+  labels:
+    name: tensor-1g
+spec:
+  restartPolicy: Never
+  imagePullSecrets:
+    - name: all-icr-io
+  containers:
+    - name: base
+      image: docker.io/kaurayibm/gputensor
+      resources:
+        limits:
+          cpu: '1'
+          memory: 5Gi
+          nvidia.com/mig-1g.10gb: 1
+        requests:
+          cpu: '1'
+          memory: 5Gi
+          nvidia.com/mig-1g.10gb: 1
+      volumeMounts:
+        - name: dshm
+          mountPath: /dev/shm
+        - name: data
+          mountPath: /data
+      imagePullPolicy: IfNotPresent
+  serviceAccount: default
+  volumes:
+    - name: dshm
+      emptyDir:
+        medium: Memory
+    - name: data
+      persistentVolumeClaim:
+        claimName: fmaas-monitoring-cos

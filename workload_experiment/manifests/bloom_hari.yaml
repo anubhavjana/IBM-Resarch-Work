@@ -1,0 +1,52 @@
+
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: tgis-grpc-load-bloom-router-mig3g
+# spec:
+#   restartPolicy: Always
+#   containers:
+#   - name: tgis-grpc-load-bloom-router-mig3g
+#     image: docker.io/felixgeorge/loadgen:user
+#     imagePullPolicy: IfNotPresent
+#     env:
+#     - name: REQUEST_URL
+#       value: "10.129.3.203:8032"
+#     - name: TLS_AUTH
+#       value: "disabled"
+#     - name: USERS
+#       value: "[{\"user_id\":\"Alan\",\"model_id\":\"llama3\",\"latency\":20,\"request_rate\":50,\"out_token_size\":100,\"batch_size\":1,\"variable_token_size\":false,\"iterations\":1800},{\"user_id\":\"Noel\",\"model_id\":\"llama3\",\"latency\":50,\"request_rate\":50,\"out_token_size\":100,\"batch_size\":1,\"variable_token_size\":false,\"iterations\":1800},{\"user_id\":\"Hari\",\"model_id\":\"bloom\",\"latency\":10,\"request_rate\":50,\"out_token_size\":100,\"batch_size\":1,\"variable_token_size\":false,\"iterations\":1800}]"
+#     - name: DUMP_RESPONSE
+#       value: "disabled"
+
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tgis-grpc-load-bloom-router-mig3g-hari
+spec:
+  restartPolicy: Always
+  containers:
+  - name: tgis-grpc-load-bloom-router-mig3g-hari
+    image: docker.io/anubhavjana18/gpu_load:per_user_loadgen_pod
+    imagePullPolicy: IfNotPresent
+    env:
+    - name: REQUEST_URL
+      value: "10.129.2.19:8032"
+    - name: TLS_AUTH
+      value: "disabled"
+    - name: USERS
+      value: "Hari"
+    - name: REQUEST_RATE
+      value: "50"
+    - name: ITERATIONS
+      value: "1800"
+    - name: TOKEN_SIZE
+      value: "100"
+    - name: BATCH_SIZE
+      value: "1"
+    
+
+
+    

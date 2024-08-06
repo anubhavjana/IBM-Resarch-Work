@@ -1,0 +1,50 @@
+{
+    "Users": [
+        {
+            "UserId": "Alan",
+            "Services": [
+                {
+                    "Service": "10.128.4.15",
+                    "Port": 8033,
+                    "Traffic": 30,
+                    "Priority": 1
+                },
+                {
+                    "Service": "10.128.4.16",
+                    "Port": 8033,
+                    "Traffic": 36,
+                    "Priority": 1
+                },
+                {
+                    "Service": "10.128.4.17",
+                    "Port": 8033,
+                    "Traffic": 36,
+                    "Priority": 1
+                }
+            ]
+        },
+        {
+            "UserId": "Noel",
+            "Services": [
+                {
+                    "Service": "10.128.4.15",
+                    "Port": 8033,
+                    "Traffic": 37,
+                    "Priority": 2
+                },
+                {
+                    "Service": "10.128.4.16",
+                    "Port": 8033,
+                    "Traffic": 32,
+                    "Priority": 2
+                },
+                {
+                    "Service": "10.128.4.17",
+                    "Port": 8033,
+                    "Traffic": 32,
+                    "Priority": 2
+                }
+            ]
+        }
+    ]
+}

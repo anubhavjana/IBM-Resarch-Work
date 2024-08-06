@@ -1,0 +1,71 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: bloom
+  namespace: fmaas-monitoring
+  labels:
+    name: bloom
+    workload: tgis-model-test
+spec:
+  restartPolicy: Never
+  imagePullSecrets:
+    - name: all-icr-io
+  containers:
+    - resources:
+        limits:
+          cpu: '2'
+          memory: 10Gi
+          nvidia.com/gpu: 1
+        requests:
+          cpu: '2'
+          memory: 10Gi
+          nvidia.com/gpu: 1
+      name: base
+      command:
+        - sh
+        - '-c'
+        - |
+          TRANSFORMERS_CACHE=/data text-generation-launcher --max-concurrent-requests 10000 --max-batch-size 1000 
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: dshm
+          mountPath: /dev/shm
+        - name: data
+          mountPath: /data
+        - name: test
+          mountPath : /test
+      image: 'docker.io/felixgeorge/text-generation-server:v1'
+  volumes:
+    - name: dshm
+      emptyDir:
+        medium: Memory
+    - name: data
+      persistentVolumeClaim:
+        claimName: fmaas-monitoring-cos
+    - name: test
+      persistentVolumeClaim:
+        claimName: llama-3-pvc
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tgis-grpc-load-bloom
+spec:
+  restartPolicy: Never
+  containers:
+  - name: tgis-grpc-load-bloom
+    image: docker.io/felixgeorge/gpu_load:grpc_inference
+    imagePullPolicy: IfNotPresent
+    env:
+    - name: REQUEST_URL
+      value: "10.128.2.48:8033"
+    - name: ITERATIONS
+      value: "1"
+    - name: TOKEN_SIZE
+      value: "500"
+    - name: THREADS
+      value: "1"
+    - name: BATCH_SIZE
+      value: "4"
+    - name: TLS_AUTH
+      value: "disabled"

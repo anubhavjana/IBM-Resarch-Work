@@ -1,0 +1,43 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: bloom-1
+  namespace: fmaas-monitoring
+  labels:
+    name: bloom-1
+    workload: tgis-model-test
+spec:
+  imagePullSecrets:
+    - name: all-icr-io
+  containers:
+    - resources:
+        limits:
+          cpu: '2'
+          memory: 50Gi
+          nvidia.com/mig-2g.20gb: 1
+        requests:
+          cpu: '2'
+          memory: 50Gi
+          nvidia.com/mig-2g.20gb: 1
+      name: base
+      command:
+        - sh
+        - '-c'
+        - |
+          TRANSFORMERS_CACHE=/data text-generation-launcher
+          --max-concurrent-requests 10000 --max-batch-size 1000 
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: dshm
+          mountPath: /dev/shm
+        - name: data
+          mountPath: /data
+      image: 'docker.io/felixgeorge/tgis:v2'
+  volumes:
+    - name: dshm
+      emptyDir:
+        medium: Memory
+    - name: data
+      persistentVolumeClaim:
+        claimName: fmaas-monitoring-cos
+

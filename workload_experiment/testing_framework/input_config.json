@@ -1,0 +1,14 @@
+{
+    "updates": [
+        {
+            "time": 0,
+            "request_rates": [10,14], 
+            "latencies": [10,40]
+        },
+        {
+            "time": 40,
+            "request_rates": [15,21],
+            "latencies": [10,40]
+        }
+    ]
+}

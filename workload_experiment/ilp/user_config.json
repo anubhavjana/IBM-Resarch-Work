@@ -1,0 +1,37 @@
+{
+    "Users": [
+        {
+            "UserId": "Alan",
+            "Services": [
+                {
+                    "Service": "192.168.1.6",
+                    "Port": 8033,
+                    "Traffic": 100.0,
+                    "Priority": 1
+                }
+            ]
+        },
+        {
+            "UserId": "Noel",
+            "Services": [
+                {
+                    "Service": "192.168.1.6",
+                    "Port": 8033,
+                    "Traffic": 100.0,
+                    "Priority": 2
+                }
+            ]
+        },
+        {
+            "UserId": "Hari",
+            "Services": [
+                {
+                    "Service": "192.168.1.6",
+                    "Port": 8033,
+                    "Traffic": 100.0,
+                    "Priority": 3
+                }
+            ]
+        }
+    ]
+}

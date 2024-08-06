@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: load-generator-bloom-no-priority
+  namespace: fmaas-monitoring
+spec:
+  containers:
+  - name: load-generator-bloom-no-priority
+    image: docker.io/felixgeorge/loadgen:user
+    imagePullPolicy: Always
+    env:
+    - name: REQUEST_URL
+      value: "10.128.4.201:8033"
+    - name: TLS_AUTH
+      value: "disabled"
+    - name: USERS
+      value: "[{\"user_id\":\"Alan\",\"model_id\":\"llama3\",\"latency\":20,\"request_rate\":155,\"out_token_size\":60,\"batch_size\":1,\"variable_token_size\":false,\"iterations\":1800}]"
+    - name: DUMP_RESPONSE
+      value: "disabled"

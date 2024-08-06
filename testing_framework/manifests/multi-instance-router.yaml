@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: llm-router-multi-instance-v4
+  namespace: fmaas-monitoring
+  labels:
+    name: llm-router-multi-instance-v4
+    workload: tgis-model-test
+spec:
+  containers:
+  - name: llm-router-multi-instance-v4
+    image: docker.io/felixgeorge/llm-router:v11
+    ports:
+    - containerPort: 8032
+    env:
+    - name: GRPC_PORT
+      value: "8032"
+    - name: MAX_BATCH_SIZE
+      value: "20"
+    - name: QUEUE_SIZE
+      value: "200"
+    - name: BYPASS
+      value: "true"
+    - name: UPDATED_USERS_MAP
+      value: "{\"Users\":[{\"UserId\":\"Alan\",\"Services\":[{\"Service\":\"10.130.4.216\",\"Port\":8033,\"Traffic\":34,\"Priority\":1},{\"Service\":\"10.128.4.169\",\"Port\":8033,\"Traffic\":33,\"Priority\":1},{\"Service\":\"10.128.4.170\",\"Port\":8033,\"Traffic\":33,\"Priority\":1}]},{\"UserId\":\"Noel\",\"Services\":[{\"Service\":\"10.130.4.216\",\"Port\":8033,\"Traffic\":34,\"Priority\":2},{\"Service\":\"10.128.4.169\",\"Port\":8033,\"Traffic\":33,\"Priority\":2},{\"Service\":\"10.128.4.170\",\"Port\":8033,\"Traffic\":33,\"Priority\":2}]},{\"UserId\":\"Hari\",\"Services\":[{\"Service\":\"10.130.4.216\",\"Port\":8033,\"Traffic\":34,\"Priority\":3},{\"Service\":\"10.128.4.169\",\"Port\":8033,\"Traffic\":33,\"Priority\":3},{\"Service\":\"10.128.4.170\",\"Port\":8033,\"Traffic\":33,\"Priority\":3}]}]}"

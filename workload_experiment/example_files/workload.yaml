@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tgis-grpc-load-llama
+spec:
+  restartPolicy: Always
+  containers:
+  - name: tgis-grpc-load-llama
+    image: docker.io/felixgeorge/gpu_load:grpc_inference
+    imagePullPolicy: Always
+    env:
+    - name: REQUEST_URL
+      value: "10.128.2.193:8033"
+    - name: ITERATIONS
+      value: "5"
+    - name: TOKEN_SIZE
+      value: "500"
+    - name: THREADS
+      value: "50"
+    - name: BATCH_SIZE
+      value: "10"
+    - name: TLS_AUTH
+      value: "disabled"
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tgis-grpc-load-granite-mig
+spec:
+  restartPolicy: Always
+  containers:
+  - name: tgis-grpc-load-granite-mig
+    image: docker.io/felixgeorge/gpu_load:grpc_inference
+    imagePullPolicy: Always
+    env:
+    - name: REQUEST_URL
+      value: "10.128.2.204:8033"
+    - name: ITERATIONS
+      value: "5"
+    - name: TOKEN_SIZE
+      value: "500"
+    - name: THREADS
+      value: "50"
+    - name: BATCH_SIZE
+      value: "10"
+    - name: TLS_AUTH
+      value: "disabled"
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tgis-grpc-load-granite
+spec:
+  restartPolicy: Always
+  containers:
+  - name: tgis-grpc-load-granite
+    image: docker.io/felixgeorge/gpu_load:grpc_inference
+    imagePullPolicy: Always
+    env:
+    - name: REQUEST_URL
+      value: "10.130.4.28:8033"
+    - name: ITERATIONS
+      value: "5"
+    - name: TOKEN_SIZE
+      value: "500"
+    - name: THREADS
+      value: "50"
+    - name: BATCH_SIZE
+      value: "10"
+    - name: TLS_AUTH
+      value: "disabled"

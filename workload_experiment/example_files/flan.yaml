@@ -1,0 +1,42 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: flan-t5-mig1g-1
+  namespace: fmaas-monitoring
+  labels:
+    name: flan-t5-mig1g
+    workload: tgis-model-test
+spec:
+  restartPolicy: Never
+  imagePullSecrets:
+    - name: all-icr-io
+  containers:
+    - resources:
+        limits:
+          cpu: '1'
+          memory: 10Gi
+          nvidia.com/mig-1g.10gb: 1
+        requests:
+          cpu: '1'
+          memory: 10Gi
+          nvidia.com/mig-1g.10gb: 1
+      name: base
+      command:
+        - sh
+        - '-c'
+        - |
+          TRANSFORMERS_CACHE=/data text-generation-launcher --max-concurrent-requests 10000 --max-batch-size 1000 --model-name google/flan-t5-small
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: dshm
+          mountPath: /dev/shm
+        - name: data
+          mountPath: /data
+      image: 'docker.io/felixgeorge/tgis:v2'
+  volumes:
+    - name: dshm
+      emptyDir:
+        medium: Memory
+    - name: data
+      persistentVolumeClaim:
+        claimName: fmaas-monitoring-cos

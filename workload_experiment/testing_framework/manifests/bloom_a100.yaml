@@ -1,0 +1,47 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: bloom-v3
+  namespace: fmaas-monitoring
+  labels:
+    name: bloom-v3
+    workload: tgis-model-test
+spec:
+  restartPolicy: Never
+  imagePullSecrets:
+    - name: all-icr-io
+  containers:
+    - resources:
+        limits:
+          cpu: '2'
+          memory: 50Gi
+          nvidia.com/gpu: 1
+        requests:
+          cpu: '2'
+          memory: 50Gi
+          nvidia.com/gpu: 1
+      name: base
+      command:
+        - sh
+        - '-c'
+        - |
+          TRANSFORMERS_CACHE=/data text-generation-launcher --max-waiting-tokens 1 --max-concurrent-requests 10000 --max-batch-size 1000 
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: dshm
+          mountPath: /dev/shm
+        - name: data
+          mountPath: /data
+        - name: test
+          mountPath : /test
+      image: 'docker.io/felixgeorge/text-generation-server:v3'
+  volumes:
+    - name: dshm
+      emptyDir:
+        medium: Memory
+    - name: data
+      persistentVolumeClaim:
+        claimName: fmaas-monitoring-cos
+    - name: test
+      persistentVolumeClaim:
+        claimName: llama-3-pvc

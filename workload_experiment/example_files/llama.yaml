@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: llama-full-gpu
+  labels:
+    name: llama-full-gpu
+    workload: tgis-model-test
+spec:
+  imagePullSecrets:
+    - name: all-icr-io
+  containers:
+    - name: base
+      image: 'docker.io/felixgeorge/tgis:v2'
+      imagePullPolicy: IfNotPresent
+      command:
+        - sh
+        - -c
+        - >
+          TRANSFORMERS_CACHE=/data text-generation-launcher
+          --max-concurrent-requests 10000 --max-batch-size 1000 --model-name /data/LLaMa/models/hf/7B-F
+      resources:
+        requests:
+          cpu: 2
+          nvidia.com/gpu: 1
+          memory: 50Gi
+        limits:
+          cpu: 2
+          nvidia.com/gpu: 1
+          memory: 50Gi
+      volumeMounts:
+         - name: dshm
+           mountPath: "/dev/shm"
+         - name: data
+           mountPath: /data
+  volumes:
+    - name: dshm
+      emptyDir:
+        medium: Memory
+    - name: data
+      persistentVolumeClaim:
+        claimName: llama-eval-pvc

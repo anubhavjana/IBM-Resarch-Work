@@ -1,0 +1,10 @@
+timestamp,__name__,endpoint,instance,job,namespace,pod,prometheus,service,user,value
+2024-07-02 10:17:38.588000059,router_request_success,http,10.131.1.111:3000,tgis-bam,fmaas-monitoring,llm-router-multi-instance-v3,openshift-user-workload-monitoring/user-workload,tgis-bam,Hari,1.0
+2024-07-02 10:17:43.588000059,router_request_success,http,10.131.1.111:3000,tgis-bam,fmaas-monitoring,llm-router-multi-instance-v3,openshift-user-workload-monitoring/user-workload,tgis-bam,Hari,1.0
+2024-07-02 10:17:48.588000059,router_request_success,http,10.131.1.111:3000,tgis-bam,fmaas-monitoring,llm-router-multi-instance-v3,openshift-user-workload-monitoring/user-workload,tgis-bam,Hari,1.0
+2024-07-02 10:17:53.598000050,router_request_success,http,10.131.1.111:3000,tgis-bam,fmaas-monitoring,llm-router-multi-instance-v3,openshift-user-workload-monitoring/user-workload,tgis-bam,Hari,1.0
+2024-07-02 10:17:58.588000059,router_request_success,http,10.131.1.111:3000,tgis-bam,fmaas-monitoring,llm-router-multi-instance-v3,openshift-user-workload-monitoring/user-workload,tgis-bam,Hari,1.0
+2024-07-02 10:17:43.588000059,router_request_success,http,10.131.1.111:3000,tgis-bam,fmaas-monitoring,llm-router-multi-instance-v3,openshift-user-workload-monitoring/user-workload,tgis-bam,Noel,1.0
+2024-07-02 10:17:48.588000059,router_request_success,http,10.131.1.111:3000,tgis-bam,fmaas-monitoring,llm-router-multi-instance-v3,openshift-user-workload-monitoring/user-workload,tgis-bam,Noel,1.0
+2024-07-02 10:17:53.598000050,router_request_success,http,10.131.1.111:3000,tgis-bam,fmaas-monitoring,llm-router-multi-instance-v3,openshift-user-workload-monitoring/user-workload,tgis-bam,Noel,1.0
+2024-07-02 10:17:58.588000059,router_request_success,http,10.131.1.111:3000,tgis-bam,fmaas-monitoring,llm-router-multi-instance-v3,openshift-user-workload-monitoring/user-workload,tgis-bam,Noel,1.0

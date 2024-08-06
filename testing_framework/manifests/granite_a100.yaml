@@ -1,0 +1,43 @@
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: granite-v3
+  namespace: fmaas-monitoring
+  labels:
+    name: granite-v3
+    workload: tgis-model-test
+spec:
+  restartPolicy: Never
+  imagePullSecrets:
+    - name: all-icr-io
+  containers:
+    - resources:
+        limits:
+          cpu: '2'
+          memory: 50Gi
+          nvidia.com/gpu: 1
+        requests:
+          cpu: '2'
+          memory: 50Gi
+          nvidia.com/gpu: 1
+      name: base
+      command:
+        - sh
+        - '-c'
+        - |
+          TRANSFORMERS_CACHE=/data/transformers_cache text-generation-launcher --max-waiting-tokens 1 --max-concurrent-requests 10000 --max-batch-size 1000 --model-name /data/transformers_cache/models--ibm-granite--granite-3b-code-instruct/snapshots/438ae81a509230148f962aaf669bdf42656a31ec
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: dshm
+          mountPath: /dev/shm
+        - name: data
+          mountPath: /data
+      image: 'docker.io/felixgeorge/text-generation-server:v3'
+  volumes:
+    - name: dshm
+      emptyDir:
+        medium: Memory
+    - name: data
+      persistentVolumeClaim:
+        claimName: fmaas-model-pvc
